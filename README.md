@@ -11,14 +11,16 @@ An integrated, end-to-end artificial intelligence support system developed for t
 │   └── sample_images/       # 5+ exported Fashion-MNIST test images (.png)
 ├── models/
 │   ├── return_risk_model.pkl    # Part 1: Preprocessing & Random Forest pipeline
-│   └── product_classifier.pt   # Part 2: Trained image categoriser weights
-├── transcripts/             # Part 3: All 8+ agent test conversations (.txt or .md)
-├── generate_orders.py       # Part 1: Seeded dataset generator script
-├── orders_dataset.csv       # Part 1: Generated orders dataset (6,000 rows)
-├── agent.py                 # Part 3: LangGraph agent logic and tools
-├── train_risk_model.py      # Part 1: Training & evaluation script
-├── train_image_model.py     # Part 2: CNN transfer learning script
-└── README.md                # This file (Project documentation)
+│   └── product_classifier.pt    # Part 2: Trained image categoriser weights
+├── transcripts/                 # Part 3: All 8+ agent test conversations (.txt or .md)
+├── generate_orders.py           # Part 1: Seeded dataset generator script
+├── orders_dataset.csv           # Part 1: Generated orders dataset (6,000 rows)
+├── verify_data.py               # Part 1: Data Preprocessing
+├── train_baseline.py            # Part 1: Baseline Training & evaluation script
+├── part1_complete_pipeline.py   # Part 1: Full Training & evaluation script
+├── train_image_model.py         # Part 2: CNN transfer learning script
+├── agent.py                     # Part 3: LangGraph agent logic and tools
+└── README.md                    # This file (Project documentation)
 ```
 
 ---
@@ -104,42 +106,83 @@ Classification Report (Zero-Division Handled):
 weighted avg       0.60      0.77      0.67      1200
 
 ### **5. Logistic Regression Tuning & Business Trade-offs**
-*   **Default (0.5 Threshold):** Accuracy: `[INSERT]`, F1: `[INSERT]`, Recall: `[INSERT]`, Precision: `[INSERT]`, ROC-AUC: `[INSERT]`
-*   **F1-Maximising Threshold (\\(t^*_{lr}\\)):** `[INSERT_lr_threshold, e.g., 0.38]`
-*   **Metrics at \\(t^*_{lr}\\):** Accuracy: `[INSERT]`, F1: `[INSERT]`, Recall: `[INSERT]`, Precision: `[INSERT]`
+Logistic Regression at Default 0.5 Threshold:
+Accuracy: 0.591667 (or 59.17%)
+F1-Score (Class 1): 0.392060 (or 39.21%) (Satisfies the >0.30 requirement)
+Recall: 0.578755 (or 57.88%)
+Precision: 0.296435 (or 29.64%)
+ROC-AUC: 0.625263 (or 0.6253) (Satisfies the >0.58 requirement)
+
+Optimal F1-Maximizing Threshold (Sweep from 0.1 to 0.9 in steps of 0.02):
+Optimal Threshold (t∗): 0.44
+Accuracy: 0.501667
+F1-Score (Class 1): 0.409091
+Recall: 0.758242 (an increase of +17.9487% over default—satisfies the 
+ge15 percentage-point gain requirement)
+Precision: 0.280108 (a precision drop of only -1.6327% compared to default)
 
 > **Business Trade-off Analysis:**
-> Shifting the decision threshold down from 0.5 to `[INSERT_lr_threshold]` represents a deliberate business choice. By lowering the threshold, we accept more false positives (orders flagged as high return-risk that are actually kept) to capture substantially more true positives (catching returns before they occur). The premium of carrying out proactive intervention (e.g., confirming orders via support, tightening verification checks) is much lower than the actual logistics and processing costs of handling physical returns. Hence, we accept a precision drop of `[INSERT_PREC_DROP]%` to boost recall by `[INSERT_RECALL_GAIN]%` points.
+> The Business Trade-Off of Decision Threshold Calibration: Lowering the decision threshold from the default 0.5 to the F1-maximizing threshold of 0.44 shifts the model's sensitivity to prioritize catching actual returns (maximizing Recall) over minimizing false alarms (maximizing Precision). In e-commerce logistics, a False Negative (failing to flag a high-risk order that is subsequently returned) is highly expensive: it incurs double shipping costs (reverse logistics), warehouse reprocessing labor, and potential inventory depreciation. Conversely, a False Positive (wrongly flagging a low-risk order as high risk) is less costly, typically resulting in a lightweight, proactive automated support check-in or a brief manual review. By choosing the 0.44 threshold, Flipkart actively accepts more False Positives (a 1.63% drop in precision) as a justified business trade-off to capture 17.95% more actual return orders (raising recall from 57.88% to 75.82%), thereby significantly lowering total operational waste.
+
 
 ### **6. Random Forest Model & GridSearchCV**
-*   **GridSearchCV Parameters:** `n_estimators` ∈ [100, 200], `max_depth` ∈ [6, 10, None], evaluated with 5-Fold StratifiedKFold cross-validation scored on `roc_auc`.
-*   **Winning Hyperparameters:** `n_estimators`: `[INSERT]`, `max_depth`: `[INSERT]`
-*   **Best Cross-Validated ROC-AUC:** `[INSERT_CV_AUC, e.g., 0.695]`
-*   **Held-out Test-set ROC-AUC:** `[INSERT_TEST_AUC, e.g., 0.689]` (Within 0.05 of the CV score, demonstrating stable generalization).
+By running a grid search with 5-fold Stratified Cross-Validation over n_estimators:  and max_depth: [6, 10, None], we obtain these exact results:
+Winning Parameters: {'rf__max_depth': 6, 'rf__n_estimators': 100}
+Best Cross-Validated (CV) ROC-AUC: 0.617836
+Held-Out Test-Set ROC-AUC: 0.614286
+ROC-AUC Difference (CV - Test): 0.003550 (A gap of only 0.003 indicates that the model is extremely robust and shows absolutely no signs of overfitting, satisfying the requirement to be within 0.05 of the CV score).
+
 
 ### **7. Feature Importance Analysis**
 
-| Rank | Impurity-Based Importance (`.feature_importances_`) | Permutation Importance (On Test Set) |
-| :--- | :--- | :--- |
-| 1 | `[INSERT_IMP_1]` | `[INSERT_PERM_1]` |
-| 2 | `[INSERT_IMP_2]` | `[INSERT_PERM_2]` |
-| 3 | `[INSERT_IMP_3]` | `[INSERT_PERM_3]` |
-| 4 | `[INSERT_IMP_4]` | `[INSERT_PERM_4]` |
-| 5 | `[INSERT_IMP_5]` | `[INSERT_PERM_5]` |
+Comparison Table (Sorted by Impurity-Based Importance):
+                    Feature  Impurity_Importance  Permutation_Mean  Impurity_Rank  Permutation_Rank
+         payment_method_COD             0.166461          0.068944              1                 1
+                  price_inr             0.137116          0.008015              2                 2
+       customer_tenure_days             0.107431         -0.005192              3                18
+       delivery_distance_km             0.097244         -0.002711              4                15
+               discount_pct             0.089011         -0.002868              5                16
+              delivery_days             0.075522         -0.000416              6                 8
+        num_previous_orders             0.067151         -0.001642              7                13
+       num_previous_returns             0.051888          0.007110              8                 4
+payment_method_Prepaid_Card             0.042080         -0.003041              9                17
+               rating_given             0.038080         -0.002549             10                14
 
 > **Permutation vs. Gini Impurity Comparison:**
-> `[INSERT_YOUR_INTERPRETATION_PARAGRAPH_HERE. Explain why specific features like previous return rates or tenure drive return risk. Name which features—such as delivery_distance_km—lost substantial importance under permutation, and explain in one sentence why impurity-based Gini importance overrates high-cardinality continuous columns because they provide more opportunities for random splits in tree structures.]`
+The High-Cardinality Bias of Gini Importance: Gini impurity-based feature importance (.feature_importances_) evaluates a feature based on how frequently it is chosen to split nodes across all trees. Consequently, it is heavily biased toward high-cardinality, continuous variables like customer_tenure_days (Rank 3), delivery_distance_km (Rank 4), and discount_pct (Rank 5). Because these continuous variables contain hundreds of unique numerical values, the random forest model can recursively split on them to greedily reduce impurity on the training set, even if those splits represent random noise rather than a generalisable return signal.
+In contrast, Permutation Feature Importance shuffles the values of a single feature on the held-out test split and measures the resulting drop in model performance. When we apply this honest evaluation technique, high-cardinality continuous columns like customer_tenure_days, delivery_distance_km, and discount_pct completely collapse—dropping from top-5 positions to ranks 18, 15, and 16 respectively, with mean permutation importances near or below zero. Meanwhile, payment_method_COD and price_inr robustly maintain their top ranks. This proves that while Gini split frequency overrates noisy, high-cardinality continuous variables because of their multi-split flexibility, shuffling them has zero negative effect on test performance, revealing that they contain negligible generalisable predictive signal.
 
 ### **8. Subgroup Analysis & Corrective Proposals**
-*   **Weakest Category Subgroup:** `[INSERT_WEAKEST_CAT, e.g., Electronics]` — Precision: `[INSERT]%`, Recall: `[INSERT]%`
-*   **Weakest Payment Subgroup:** `[INSERT_WEAKEST_PAY, e.g., COD]` — Precision: `[INSERT]%`, Recall: `[INSERT]%`
+--- Task 8: Subgroup Analysis on Random Forest ---
+
+Random Forest F1-maximizing Threshold (t*_rf): 0.46
+  F1-Score:  0.396181
+  Recall:    0.608059
+  Precision: 0.293805
+  Accuracy:  0.578333
+
+Subgroups by Product Category:
+Product Category  Total  Returns   Recall  Precision
+            Home    221       34 0.705882   0.220183
+     Electronics    261       52 0.519231   0.293478
+        Footwear    217       56 0.642857   0.336449
+         Apparel    385      100 0.600000   0.281690
+          Beauty    116       31 0.612903   0.431818
+
+Subgroups by Payment Method:
+Payment Method  Total  Returns   Recall  Precision
+           COD    503      155 0.980645   0.317328
+  Prepaid_Card    283       49 0.061224   0.130435
+   Prepaid_UPI    294       48 0.166667   0.228571
+        Wallet    120       21 0.142857   0.107143
 
 > **Concrete Proposed Action:**
-> `[INSERT_YOUR_SPECIFIC_FIX_HERE. Do not write a generic 'collect more data' response. Instead, propose a concrete fix, such as implementing a category-specific risk threshold for Electronics or adding a payment-specific risk penalty.]`
+> Root-Cause Subgroup Diagnosis and Actionable Intervention: The subgroup analysis reveals a critical performance disparity across payment methods: the model achieves an exceptional 98.06% Recall on Cash On Delivery (COD) orders, but fails catastrophically on prepaid channels, showing a recall of only 6.12% on Prepaid_Card, 14.29% on Wallet, and 16.67% on Prepaid_UPI. This disparity arises because the ground-truth data-generating function treats COD as an overwhelmingly strong driver of returns (+0.9 log-odds boost), making the random forest heavily dependent on the payment_method_COD indicator to trigger a high-risk score. For prepaid transactions, where this indicator is absent, the model struggles to detect risk, leading to high false-negative rates.
+To resolve this without introducing data leakage, we propose implementing payment-specific decision thresholds. Since prepaid orders have lower baseline return rates (~17% vs. ~31% for COD) and the risk scores generated by the Random Forest are compressed into a much lower probability scale, a unified threshold of 0.46 is too aggressive. We should calibrate separate thresholds for prepaid subgroups (e.g., setting a threshold of 0.15 for Prepaid Card/UPI orders). This adjustment would expand the model's sensitivity specifically for non-COD orders, catching high-risk returns in prepaid transactions without affecting the high-performing COD pipeline.
 
 ### **9. Saved Pipeline Artifact**
 *   **Model Location:** `models/return_risk_model.pkl` (A unified scikit-learn Pipeline containing both preprocessing and the tuned Random Forest classifier).
-*   **F1-Maximising Random Forest Threshold (\\(t^*_{rf}\\)):** `[INSERT_t_rf_value]`
+*   **F1-Maximising Random Forest Threshold (\\(t^*_{rf}\\)):** `0.46`
 
 ---
 
