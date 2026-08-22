@@ -1,0 +1,15 @@
+============================================================
+Scenario 4: Tool Execution (Fashion-MNIST Image Classification)
+============================================================
+
+USER: Classify this product image for me: 07_sneaker.png
+AGENT (JSON RESPONSE):
+{
+  "response": "I have executed the deep-learning Product Image Classifier on the provided image. The item has been classified as a **Sneaker** with **99.99% confidence**.",
+  "tool_used": "classify_product_image",
+  "predicted_category": "Sneaker",
+  "confidence": 0.9998838901519775
+}
+
+------------------------------------------------------------
+

@@ -1,0 +1,24 @@
+============================================================
+Scenario 6: Multi-Turn State Reset Verification
+============================================================
+
+USER: Hi, please call me Amit Kumar.
+AGENT (JSON RESPONSE):
+{
+  "response": "Hello amit! Welcome to Flipkart Customer Support. How can I assist you with your orders or policies today?",
+  "user_name": "amit"
+}
+
+------------------------------------------------------------
+
+--- TRIGGER EVENT: agent.reset() called ---
+Conversation history and state have been fully cleared.
+
+USER: What is my name?
+AGENT (JSON RESPONSE):
+{
+  "response": "I'm here to help with Flipkart order inquiries, product image classification, or policy questions. What would you like to discuss?"
+}
+
+------------------------------------------------------------
+

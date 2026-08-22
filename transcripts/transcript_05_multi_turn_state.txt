@@ -1,0 +1,35 @@
+============================================================
+Scenario 5: Multi-Turn Conversation (Carrying state across turns)
+============================================================
+
+USER: Hello, my name is Amit Kumar.
+AGENT (JSON RESPONSE):
+{
+  "response": "Hello amit! Welcome to Flipkart Customer Support. How can I assist you with your orders or policies today?",
+  "user_name": "amit"
+}
+
+------------------------------------------------------------
+
+USER: What was my name again?
+AGENT (JSON RESPONSE):
+{
+  "response": "Your name is amit.",
+  "user_name": "amit"
+}
+
+------------------------------------------------------------
+
+USER: Can you check how fast orders arrive in New Delhi?
+AGENT (JSON RESPONSE):
+{
+  "response": "I have run the Order-Return Risk Assessment model. The order has a return probability of **62.26%**, placing it in the **High Risk** bucket. Recommendation: Flag for customer-relations review before dispatch.",
+  "tool_used": "check_return_risk",
+  "metrics": {
+    "probability": 0.6226279922736109,
+    "risk_bucket": "High"
+  }
+}
+
+------------------------------------------------------------
+

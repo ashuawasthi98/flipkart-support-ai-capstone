@@ -1,0 +1,12 @@
+============================================================
+Scenario 2: Policy RAG (COD Refund Timeline)
+============================================================
+
+USER: I paid for my order in cash at the door. If I return it, how do I get my money back and how long does it take?
+AGENT (JSON RESPONSE):
+{
+  "response": "I'm here to help with Flipkart order inquiries, product image classification, or policy questions. What would you like to discuss?"
+}
+
+------------------------------------------------------------
+

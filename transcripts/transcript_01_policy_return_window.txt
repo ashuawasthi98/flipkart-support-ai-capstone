@@ -1,0 +1,13 @@
+============================================================
+Scenario 1: Policy RAG (Apparel Return Window)
+============================================================
+
+USER: I ordered a pair of shoes but they are too tight. How many days do I have to return them?
+AGENT (JSON RESPONSE):
+{
+  "response": "I am sorry, but I do not have verified policy guidelines regarding that specific query in my knowledge base. To prevent providing inaccurate information, I must decline to answer.",
+  "status": "refused_ungrounded"
+}
+
+------------------------------------------------------------
+

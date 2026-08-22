@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "category": "Return Windows",
+    "title": "Apparel and Footwear Return Policy",
+    "content": "Flipkart offers a convenient 10-day return policy for all apparel, clothing, and footwear items. The items must be unused, unwashed, and returned with all original tags intact. Any complimentary gifts received with the purchase must also be returned."
+  },
+  {
+    "id": 2,
+    "category": "Return Windows",
+    "title": "Electronics and Devices Return Policy",
+    "content": "Selected electronics, including mobile phones, laptops, and tablets, are eligible for a 7-day replacement-only policy. If a technical defect is reported within this period, an engineer visit will be scheduled to verify the issue before a replacement is approved. No monetary refunds are issued for opened box electronics unless a replacement is unavailable."
+  },
+  {
+    "id": 3,
+    "category": "Return Windows",
+    "title": "Home and Kitchen Appliances Return Policy",
+    "content": "Large home appliances, furniture, and kitchen tools carry a 10-day return or replacement window from the date of delivery. The item will only be accepted for return if it is in its original packaging and has not been installed by a non-Flipkart technician. Damage caused during self-installation is not covered under this policy."
+  },
+  {
+    "id": 4,
+    "category": "Return Windows",
+    "title": "Beauty and Personal Care Return Policy",
+    "content": "Due to hygiene and safety guidelines, beauty products, cosmetics, and personal care appliances are non-returnable once opened. If you receive a damaged or wrong cosmetic item, you must report it within 48 hours of delivery to be eligible for a refund or exchange. Photographic evidence of the unused product is required for claim approval."
+  },
+  {
+    "id": 5,
+    "category": "Refund Timelines",
+    "title": "Cash on Delivery (COD) Refund Policy",
+    "content": "For orders paid via Cash on Delivery (COD), refunds are processed via Bank Transfer (NEFT) or Flipkart Wallet. Once the returned item is successfully verified at our fulfillment center, NEFT transfers take 3 to 5 business days to reflect in your account. Flipkart Wallet refunds are credited almost instantly, typically within 24 hours."
+  },
+  {
+    "id": 6,
+    "category": "Refund Timelines",
+    "title": "Prepaid Order Refund Policy",
+    "content": "Refunds for prepaid orders are automatically credited back to the original payment source. For payments made through Credit/Debit Cards, Net Banking, or UPI, the refund is initiated within 24 hours of return approval. Depending on your financial institution, it may take 5 to 7 working days for card refunds and 24 to 48 hours for UPI refunds to reflect."
+  },
+  {
+    "id": 7,
+    "category": "Delivery SLAs",
+    "title": "Metro Cities Delivery Timelines",
+    "content": "Orders shipped to Metro cities (including Mumbai, Delhi, Bengaluru, and Kolkata) are eligible for 1 to 2 business days delivery. Flipkart Assured items ordered before 12:00 PM often qualify for Same-Day or Next-Day delivery options. Shipping fees are fully waived for Plus members on all Flipkart Assured orders."
+  },
+  {
+    "id": 8,
+    "category": "Delivery SLAs",
+    "title": "Non-Metro and Rural Delivery Timelines",
+    "content": "Standard delivery to Tier-2, Tier-3, and rural pin codes takes 4 to 7 business days from order confirmation. Delivery timelines may occasionally be extended due to regional holidays, adverse weather, or logistics bottlenecks. You can track your real-time shipment status on the Flipkart app using your unique tracking ID."
+  },
+  {
+    "id": 9,
+    "category": "Reverse-Pickup Guidelines",
+    "title": "Reverse-Pickup Item Condition Guidelines",
+    "content": "During a reverse-pickup, the delivery agent will conduct a physical inspection of the item's condition. The item must be unused, free of stains or physical damage, and accompanied by its original box, price tags, and accessories. If the product fails this verification, the return pickup will be rejected on the spot."
+  },
+  {
+    "id": 10,
+    "category": "Reverse-Pickup Guidelines",
+    "title": "Reverse-Pickup Attempt and Packaging Guidelines",
+    "content": "Flipkart provides up to three consecutive pickup attempts for your return order. The delivery agent will provide a standard secure tamper-proof bag, so you do not need to seal the outer package yourself. If all three pickup attempts are missed, the return request is automatically cancelled in our system."
+  },
+  {
+    "id": 11,
+    "category": "Reverse-Pickup Guidelines",
+    "title": "Instant Refund on Field Pickup Policy",
+    "content": "Select high-velocity and low-cost items are eligible for our Instant Refund on Pickup program. For these items, the refund is triggered the moment the field agent scans the product bar code and confirms the physical handoff. This service is exclusively available to high-trust accounts with low historical return rates."
+  },
+  {
+    "id": 12,
+    "category": "Reverse-Pickup Guidelines",
+    "title": "Shipping and Convenience Fee Refund Policy",
+    "content": "Original convenience and shipping fees paid at the time of purchase are non-refundable under standard return conditions. However, if an order is returned due to a Flipkart logistics error, item damage during transit, or a wrong item shipment, the full shipping fee will be credited back to your account."
+  }
+]
