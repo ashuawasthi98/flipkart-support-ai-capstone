@@ -1,11 +1,63 @@
-# Ignore Python virtual environments
+# =====================================================================
+# Flipkart AI Capstone Project - Git Ignore Configuration
+# =====================================================================
+
+# 1. Python Virtual Environments (Crucial to prevent uploading local venv)
 venv/
 .venv/
 env/
+ENV/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# Ignore compiled Python files
+# 2. Python Bytecode & Compiled Files
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.tox/
+.coverage
+.cache
+htmlcov/
 
-# Ignore local IDE settings
+# 3. Local IDE Settings (Keeps user-specific workspace files private)
 .vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*~
+
+# 4. Jupyter Notebook Caches
+.ipynb_checkpoints/
+
+# 5. Local Operating System Caches
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# 6. Specific Capstone Project Guidelines Verification
+# =====================================================================
+# DO NOT add the following to your .gitignore! They MUST be committed:
+# - orders_dataset.csv (Generated in Part 1)
+# - knowledge_base.json (Your 12 policy documents)
+# - return_risk_model.pkl (Tuned Part 1 model)
+# - product_classifier.pt (Tuned Part 2 model weights)
+# - data/sample_images/*.png (5 test images for vision classification)
+# - transcripts/*.txt (Your 8 conversational transcripts)
+# =====================================================================

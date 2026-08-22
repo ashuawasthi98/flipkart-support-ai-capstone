@@ -1,0 +1,17 @@
+============================================================
+Scenario 3: Tool Execution (Predictive Order Return Risk)
+============================================================
+
+USER: Can you run an order-risk check for an Apparel order priced at 1500 INR paid COD, with 2 previous returns out of 4 orders?
+AGENT (JSON RESPONSE):
+{
+  "response": "I have run the Order-Return Risk Assessment model. The order has a return probability of **62.26%**, placing it in the **High Risk** bucket. Recommendation: Flag for customer-relations review before dispatch.",
+  "tool_used": "check_return_risk",
+  "metrics": {
+    "probability": 0.6226279922736109,
+    "risk_bucket": "High"
+  }
+}
+
+------------------------------------------------------------
+
