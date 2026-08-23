@@ -68,7 +68,7 @@ python part1_visualizer.py
 ### **3. Part 2: Product Image Categoriser Training**
 To download the Fashion-MNIST dataset, train the transfer learning classifier head, export `product_classifier.pt`, and generate the sample test images:
 ```bash
-python train_part2.py
+python part2_img_classifier_train.py
 ```
 
 ### **4. Part 3: Flipkart Support Agent & Evaluation**
